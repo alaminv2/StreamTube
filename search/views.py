@@ -30,12 +30,10 @@ def searchView(request):
             'type': 'video',
         }
         r = requests.get(search_url, params=search_params)
-        # print(r.text)
         search_results = r.json()['items']
 
         for result in search_results:
             vidoe_ids.append(result['id']['videoId'])
-            # print(result['id']['videoId'])
 
         vidoe_params = {
             'part': 'snippet, contentDetails',
@@ -74,9 +72,6 @@ def playViedeo(request, str):
         'id': str,
     }
     v = requests.get(video_url, params=vidoe_params)
-    # print(v.text)
-    # print(v)
-    # print('\n\n')
     res = v.json()['items']
     video = {
         'video_url': f'https://www.youtube.com/embed/{res[0]["id"]}',
@@ -85,8 +80,6 @@ def playViedeo(request, str):
         'channelTitle': res[0]['snippet']['channelTitle'],
         'description': res[0]['snippet']['description'],
     }
-
-    # print(video)
 
 #  Related videos............................
     related_videos = []
