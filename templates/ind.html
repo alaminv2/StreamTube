@@ -1,0 +1,76 @@
+<!doctype html>
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css" />
+
+    <title>bootstrap card gallery</title>
+</head>
+
+<body>
+    <center>
+        <div class="container">
+            <br>
+            <h1 class="text-center">Search On Youtube</h1>
+            <form method="POST">
+                {{form|crispy}}
+                {% csrf_token %}
+                <button type="submit" style="width: 25%" class="btn btn-danger">search</button>
+            </form>
+        </div>
+    </center>
+    <br><br>
+    <hr>
+    <section class="gallery-block cards-gallery">
+        <div class="container">
+            <div class="heading">
+                <h2 class="text-center">Search Results</h2>
+            </div>
+            <div class="row">
+                {% for video in videos %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 transform-on-hover">
+                        <a class="lightbox" href="{% url 'search_app:play' str=video.id %}"><img
+                                src="{{video.thumbnails}}" class="card-img-top"></a>
+                        <div class="card-body">
+                            <a href="{% url 'search_app:play' str=video.id %}" style="color: black;">
+                                <h6>{{video.title}}</h6>
+                            </a>
+                            <a href="{{video.channelUrl}}" style="color: red; text-decoration: none;"><span
+                                    style="background-color: white;"><b>{{video.channelTitle}}</b></span></a>
+                            <span style="float: right;">{{video.duration}} minutes</span>
+                            <span class="badge badge-dark">{{video.publishedAt}}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+
+</body>
+
+</html>
